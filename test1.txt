@@ -1,0 +1,4 @@
+Garbage$Welcome to LTTS;"
+Hello$This is $$an example #2 string; And filled with words
+
+Program to read from file and $use the read data; as string
