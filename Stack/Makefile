@@ -1,16 +1,22 @@
-SRC = stack.c
+SRC = stack.c test_stack.c unity/unity.c
+INC = stack.h
 
-TEST_SRC = test_stack.c\
-unity/unity.c
+result : $(SRC)
+	gcc $^ -o all.out
 
-coverage:$(SRC) $(TEST_SRC)
-	gcc -Iunity -fprofile-arcs -ftest-coverage $^ -o all.out
+run: result
 	./all.out
-	gcov -a stack.c
 
-analyze:all $(SRC)
-	cppcheck --enable=all $(SRC)
+analyze: result
+	cppcheck --enable=all *.c
+
+memory_leak: result
 	valgrind ./all.out
 
+coverage: 
+	gcc -fprofile-arcs -ftest-coverage stack.c test_stack.c unity/unity.c -Iunity -o all.out
+	./all.out
+	gcov -all*.c
+	
 clean:
-	rm -rf *.o *.out *.gcd* *.gcno* *.gcov* 
+	rm -rf *.out *.gcov *.gcda *.gcno *.out

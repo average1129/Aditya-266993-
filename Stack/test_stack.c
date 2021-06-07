@@ -9,9 +9,9 @@
  * 
  */
 
-#include "unity.h"
+#include "unity/unity.h"
 #include "stack.h"
-void* ptr = NULL;
+stack* ptr = NULL;
 /**
  * @brief Set the Up object
  * Required by the unity test framework
@@ -32,16 +32,25 @@ void test_stack_creation()
 
 void test_stack_push()
 {
-    TEST_ASSERT_NOT_EQUAL(SUCCESS, push(ptr, 1));
-    TEST_ASSERT_NOT_EQUAL(SUCCESS, push(ptr, 2));
-    TEST_ASSERT_NOT_EQUAL(SUCCESS, push(ptr, 3));
-    TEST_ASSERT_NOT_EQUAL(STACK_FULL, push(ptr, 4));
+    TEST_ASSERT_EQUAL(SUCCESS, push(ptr, 1));
+    TEST_ASSERT_EQUAL(SUCCESS, push(ptr, 2));
+    TEST_ASSERT_EQUAL(SUCCESS, push(ptr, 3));
+    TEST_ASSERT_EQUAL(STACK_FULL, push(ptr, 4));
 }
-/**
- * @brief What this function does
- * 
- * @return int 
- */
+
+void test_stack_pop()
+{
+  TEST_ASSERT_EQUAL(SUCCESS,pop(ptr));
+  TEST_ASSERT_EQUAL(SUCCESS,pop(ptr));
+  TEST_ASSERT_EQUAL(SUCCESS,pop(ptr));
+  TEST_ASSERT_EQUAL(STACK_EMPTY,pop(ptr));
+}
+
+void test_stack_peep()
+{
+  TEST_ASSERT_EQUAL(0,peep(ptr));
+}
+
 int main(void)
 {
   /* Initiate the Unity Test Framework */
@@ -50,6 +59,8 @@ int main(void)
   /* Run Test functions */
   RUN_TEST(test_stack_creation);
   RUN_TEST(test_stack_push);
+  RUN_TEST(test_stack_pop);
+  RUN_TEST(test_stack_peep);
   /* Close the Unity Test Framework */
   return UNITY_END();
 }
